@@ -1,20 +1,22 @@
 <!DOCTYPE html>
+<meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
+<meta http-equiv="Pragma" content="no-cache">
+<meta http-equiv="Expires" content="0">
 <html>
 	<head>
 		<meta charset="utf-8">
 		<title>PhysicsDemo</title>
 	</head>
-	<canvas id="canvas" style="border:1px solid"></canvas>
-	<body>
-
-		<script type="module" src="Physics/js/build/three.js">
-
+	<canvas id="canvas" width="1280" height="800" style="border:1px solid #d3d3d3;">
+	<body style="background-color:black;">
+		<script>
 			var main = document.getElementById("canvas");
         	var render = main.getContext("2d");
-			main.style.left = "100px";
-        	main.style.top = "100px";
+			main.style.left = "0px";
+        	main.style.top = "0px";
         	main.style.position = "absolute";
 		</script>
+		<script type="module" src="Physics/js/build/three.js"></script>
 		<script type="module" src="Physics/src/main.js"></script>
 	</body>
 </html>

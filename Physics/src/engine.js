@@ -25,12 +25,6 @@ class Engine{
     init() {
         // Init scene
         this.mScene = new THREE.Scene();
-    
-
-        const canvas = document.getElementById('canvas')
-      //  canvas.width = this.mApp.getWidth();
-       // canvas.height = this.mApp.getHeight();
-
 
         // Init camera (PerspectiveCamera)
         this.mCamera = new THREE.PerspectiveCamera(
@@ -42,17 +36,13 @@ class Engine{
     
         // Init renderer
         this.mRenderer = new THREE.WebGLRenderer({ antialias: true });
-    
         // Set size (whole window)
         this.mRenderer.setSize(this.mApp.getWidth(), this.mApp.getHeight());
-    
         // Render to canvas element
         document.body.appendChild(this.mRenderer.domElement);
         
-
-
         //box
-        const box = new THREE.BoxGeometry( .5, .5, .5 );
+        const box = new THREE.BoxGeometry( 1.5, 1.5, 1.5 );
         const boxWireFrame = new THREE.WireframeGeometry( box );
         const debugDrawBox = new THREE.LineSegments( boxWireFrame );
         debugDrawBox.material.depthTest = false;
@@ -68,7 +58,7 @@ class Engine{
         debugDrawPlane.material.depthTest = false;
         debugDrawPlane.material.opacity = 0.25;
         debugDrawPlane.material.transparent = true;
-        debugDrawPlane.position.x = 10;
+        debugDrawPlane.position.x = 1;
         this.mScene.add( debugDrawPlane );
 
         // Position camera
