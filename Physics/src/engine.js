@@ -1,6 +1,7 @@
 import { App } from "./app.js";
+import { DebugDrawUtils } from "./debugDraw.js"
+import { UIUtils } from "./uiUtils.js"
 
-let engine;
 class Engine{
 
     mCamera;
@@ -12,65 +13,63 @@ class Engine{
     mDeltaTime;
     mFrameEndTime;
     mIdealDeltaTime;
-
+    mWidthRatio;
+    mHeightRatio;
     constructor(app)
     {
         this.mApp = app;
-        engine = this;
         window.addEventListener('resize',this.onWindowResize.bind(this), false);
         this.init();
       //  window.requestAnimationFrame(this.run);
     }
 
     init() {
+
+        this.mWidthRatio = this.mApp.getWidth() /window.innerWidth;
+        this.mHeightRatio = this.mApp.getHeight()/window.innerHeight;
+
+        var width = this.mWidthRatio * window.innerWidth;
+        var height = this.mHeightRatio * window.innerHeight;
+
+        
         // Init scene
         this.mScene = new THREE.Scene();
 
         // Init camera (PerspectiveCamera)
         this.mCamera = new THREE.PerspectiveCamera(
             70,
-            this.mApp.getWidth() / this.mApp.getHeight(),
+            width / height,
             0.1,
             1000
         );
+        this.mCamera.updateProjectionMatrix();
     
-        // Init renderer
+         // Init renderer
         this.mRenderer = new THREE.WebGLRenderer({ antialias: true });
         // Set size (whole window)
-        this.mRenderer.setSize(this.mApp.getWidth(), this.mApp.getHeight());
+        this.mRenderer.setSize(width, height);
         // Render to canvas element
         document.body.appendChild(this.mRenderer.domElement);
         
-        //box
-        const box = new THREE.BoxGeometry( 1.5, 1.5, 1.5 );
-        const boxWireFrame = new THREE.WireframeGeometry( box );
-        const debugDrawBox = new THREE.LineSegments( boxWireFrame );
-        debugDrawBox.material.depthTest = false;
-        debugDrawBox.material.opacity = 0.25;
-        debugDrawBox.material.transparent = true;
-
-        this.mScene.add( debugDrawBox );
-
-        //plane
-        const planeGeo = new THREE.PlaneGeometry( 10, 1 );
-        const planeWireFrame = new THREE.WireframeGeometry( planeGeo );
-        const debugDrawPlane = new THREE.LineSegments( planeWireFrame );
-        debugDrawPlane.material.depthTest = false;
-        debugDrawPlane.material.opacity = 0.25;
-        debugDrawPlane.material.transparent = true;
-        debugDrawPlane.position.x = 1;
-        this.mScene.add( debugDrawPlane );
-
-        // Position camera
-        this.mCamera.position.z = 5;
+        DebugDrawUtils.initiate(this.mScene,this.mRenderer);
+        UIUtils.initiate();
+        
+       // Position camera
+        this.mCamera.position.z = 4;
         this.mTimeSinceLastFrame = 0;
         this.mCurrentTime = 0;
         this.mIdealDeltaTime = 1000.0 / 60.0;
         this.mDeltaTime = this.mIdealDeltaTime * 0.001;
     }
     
+
+    start(){
+        
+       this.mApp.init();
+    }
+    
     // Draw the scene every time the screen is refreshed
-    run() {      
+    run() {         
        this.mFrameStartTime = performance.now();
 
        this.mApp.update(this.mDeltaTime);
@@ -89,12 +88,16 @@ class Engine{
     }
     
     onWindowResize() {
+
+        var width = this.mWidthRatio * window.innerWidth;
+        var height = this.mHeightRatio * window.innerHeight;
+
         // Camera frustum aspect ratio
-        this.mCamera.aspect = window.innerWidth / window.innerHeight;
+        this.mCamera.aspect = width / height;
         // After making changes to aspect
         this.mCamera.updateProjectionMatrix();
         // Reset size
-        this.mRenderer.setSize(window.innerWidth, window.innerHeight);
+        this.mRenderer.setSize(width ,height);
     }
      
 }

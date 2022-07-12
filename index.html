@@ -6,17 +6,24 @@
 	<head>
 		<meta charset="utf-8">
 		<title>PhysicsDemo</title>
+		<style>
+			#my-gui-container {
+				position: absolute;
+				top: 55px;
+				left: 1000px;
+			}
+		</style>
 	</head>
-	<canvas id="canvas" width="1280" height="800" style="border:1px solid #d3d3d3;">
+	<canvas id="canvas" width="1280" height="800" style="border:2px solid #d3d3d3;">
 	<body style="background-color:black;">
 		<script>
 			var main = document.getElementById("canvas");
         	var render = main.getContext("2d");
-			main.style.left = "0px";
-        	main.style.top = "0px";
         	main.style.position = "absolute";
 		</script>
 		<script type="module" src="Physics/js/build/three.js"></script>
 		<script type="module" src="Physics/src/main.js"></script>
 	</body>
+	</canvas>
+<div id="my-gui-container"></div>
 </html>
