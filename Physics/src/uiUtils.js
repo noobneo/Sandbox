@@ -1,4 +1,4 @@
-import { GUI } from './../../node_modules/dat.gui/build/dat.gui.js'
+import { GUI } from './../../node_modules/dat.gui/build/dat.gui.module.js'
 class UIUtils
 {
 
