@@ -1,5 +1,4 @@
-import { GUI } from './../../node_modules/dat.gui/build/dat.gui.module.js'
-import { TEST } from './../../node_modules/test.file.js'
+import { GUI } from './../thirdparty/node_modules/dat.gui/build/dat.gui.module.js'
 class UIUtils
 {
 

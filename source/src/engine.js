@@ -1,4 +1,3 @@
-import { App } from "./app.js";
 import { ObjectManager } from "./core/objectManager.js";
 import { DebugDrawUtils } from "./debugDraw.js"
 import { UIUtils } from "./uiUtils.js"

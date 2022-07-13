@@ -1,7 +1,5 @@
 import { Engine } from "./engine.js";
 import { DebugDrawUtils } from "./debugDraw.js"
-import { UIUtils } from "./uiUtils.js"
-import { ObjectManager } from "./core/objectManager.js"
 import { CubeObject } from "./core/cubeObject.js"
 
 class App
