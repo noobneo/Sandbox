@@ -1,6 +1,8 @@
 import { Engine } from "./engine.js";
 import { DebugDrawUtils } from "./debugDraw.js"
 import { UIUtils } from "./uiUtils.js"
+import { ObjectManager } from "./core/objectManager.js"
+import { CubeObject } from "./core/cubeObject.js"
 
 class App
 {
@@ -8,12 +10,14 @@ class App
     mEngine;
     mWidth;
     mHeight;
+    mObjectManager;
     constructor(name,width,height)
     {
         this.mName = name;
         this.mWidth = width;
         this.mHeight  = height;
         this.mEngine = new Engine(this);
+        this.mObjectManager = this.mEngine.getObjectManager();
     }
 
     getWidth()
@@ -21,24 +25,26 @@ class App
         return this.mWidth;
     }
 
-    getHeight()
-    {
+    getHeight(){
         return this.mHeight;
     }
 
 
-    run()
-    {
+    run(){
         this.mEngine.start();
         requestAnimationFrame(this.mEngine.run.bind(this.mEngine));
     }
 
-    init()
-    {
+    init(){
         //initiate
         var position = new THREE.Vector3( 0, 1, 0 );
         var rotation = new THREE.Vector3( 0, 7, 0,);    
-        var cube = DebugDrawUtils.drawCube(1.6,position,rotation);
+
+      
+        var cube = new CubeObject(1,position,rotation);
+        this.mObjectManager.addObject(cube);
+   
+       /* var cube = DebugDrawUtils.drawCube(1.6,position,rotation);
         var cubeFolder = UIUtils.addFolder("Cube");
         var rotationFolder = cubeFolder.addFolder("Rotation");
         UIUtils.addToFolder(rotationFolder,cube.rotation,"x",0, Math.PI*2);
@@ -48,7 +54,7 @@ class App
         var positionFolder = cubeFolder.addFolder("Position");
         UIUtils.addToFolder(positionFolder,cube.position,"x",0, 10);
         UIUtils.addToFolder(positionFolder,cube.position,"y",0, 8);
-        UIUtils.addToFolder(positionFolder,cube.position,"z",0, 10);
+        UIUtils.addToFolder(positionFolder,cube.position,"z",0, 10);*/
         
         //plane
         //position = new THREE.Vector3( 0, -1.5, 0 );
@@ -60,17 +66,9 @@ class App
         DebugDrawUtils.drawLine(new THREE.Vector3(-4.2,2.5,0),new THREE.Vector3(-4.2,-2.5,0));
         DebugDrawUtils.drawLine(new THREE.Vector3(4.2,2.5,0),new THREE.Vector3(4.2,-2.5,0));
 
-
-
-
-    }
-    deinit()
-    {
-
     }
 
-    update(dt)
-    {
+    update(dt){
         //console.log("Delta Time: "+dt);
     }
 }

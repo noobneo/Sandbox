@@ -1,4 +1,5 @@
 import { App } from "./app.js";
+import { ObjectManager } from "./core/objectManager.js";
 import { DebugDrawUtils } from "./debugDraw.js"
 import { UIUtils } from "./uiUtils.js"
 
@@ -7,6 +8,7 @@ class Engine{
     mCamera;
     mScene;
     mRenderer;
+    mObjectManager;
     mCube;
     mApp;
     mFrameStartTime;
@@ -15,15 +17,14 @@ class Engine{
     mIdealDeltaTime;
     mWidthRatio;
     mHeightRatio;
-    constructor(app)
-    {
+    constructor(app){
         this.mApp = app;
         window.addEventListener('resize',this.onWindowResize.bind(this), false);
         this.init();
       //  window.requestAnimationFrame(this.run);
     }
 
-    init() {
+    init(){
 
         this.mWidthRatio = this.mApp.getWidth() /window.innerWidth;
         this.mHeightRatio = this.mApp.getHeight()/window.innerHeight;
@@ -54,6 +55,8 @@ class Engine{
         DebugDrawUtils.initiate(this.mScene,this.mRenderer);
         UIUtils.initiate();
         
+        this.mObjectManager = new ObjectManager(this.mScene);
+
        // Position camera
         this.mCamera.position.z = 4;
         this.mTimeSinceLastFrame = 0;
@@ -64,15 +67,15 @@ class Engine{
     
 
     start(){
-        
        this.mApp.init();
     }
     
     // Draw the scene every time the screen is refreshed
-    run() {         
+    run(){         
        this.mFrameStartTime = performance.now();
 
        this.mApp.update(this.mDeltaTime);
+       this.mObjectManager.update(this.mDeltaTime);
        this.mRenderer.render(this.mScene, this.mCamera);
 
        this.mFrameEndTime = performance.now();
@@ -87,7 +90,7 @@ class Engine{
        requestAnimationFrame(this.run.bind(this));
     }
     
-    onWindowResize() {
+    onWindowResize(){
 
         var width = this.mWidthRatio * window.innerWidth;
         var height = this.mHeightRatio * window.innerHeight;
@@ -98,6 +101,10 @@ class Engine{
         this.mCamera.updateProjectionMatrix();
         // Reset size
         this.mRenderer.setSize(width ,height);
+    }
+
+    getObjectManager(){
+        return this.mObjectManager;
     }
      
 }

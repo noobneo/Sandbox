@@ -1,4 +1,4 @@
-import { GUI } from './../../node_modules/dat.gui/build/dat.gui.module.js'
+import { GUI } from 'dat.gui'
 class UIUtils
 {
 
@@ -13,8 +13,8 @@ class UIUtils
         guiContainer.appendChild(this.mGui.domElement);
     };
 
-    static addToFolder(folder,property,name,startLimit, endLimit){
-        folder.add(property,name,startLimit, endLimit).name(name);
+    static addToFolder(folder,property,name,startLimit, endLimit,step = 0.1){
+        return (folder.add(property,name,startLimit, endLimit,step).name(name));
     }
 
     static addFolder(name){ 
