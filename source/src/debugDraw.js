@@ -41,6 +41,11 @@
         this.mSceneRef.add( line );
         return line;
     }
+
+    static clear() {
+        this.mSceneRef = null;
+        this.mRendererRef = null;
+    }
 }
 
 

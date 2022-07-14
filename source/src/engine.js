@@ -1,6 +1,7 @@
 import { ObjectManager } from "./core/objectManager.js";
 import { DebugDrawUtils } from "./debugDraw.js"
 import { UIUtils } from "./uiUtils.js"
+import { Stats } from "./core/stats.js";
 
 class Engine{
 
@@ -16,6 +17,7 @@ class Engine{
     mIdealDeltaTime;
     mWidthRatio;
     mHeightRatio;
+    mAnimationFrameHandleId;
     constructor(app){
         this.mApp = app;
         window.addEventListener('resize',this.onWindowResize.bind(this), false);
@@ -45,12 +47,10 @@ class Engine{
         this.mCamera.updateProjectionMatrix();
     
          // Init renderer
-        this.mRenderer = new THREE.WebGLRenderer({ antialias: true });
-        // Set size (whole window)
+        this.mRenderer = new THREE.WebGLRenderer({ antialias: true , canvas: renderCanvas });
         this.mRenderer.setSize(width, height);
-        // Render to canvas element
-        document.body.appendChild(this.mRenderer.domElement);
-        
+
+      
         DebugDrawUtils.initiate(this.mScene,this.mRenderer);
         UIUtils.initiate();
         
@@ -60,7 +60,7 @@ class Engine{
         this.mCamera.position.z = 4;
         this.mTimeSinceLastFrame = 0;
         this.mCurrentTime = 0;
-        this.mIdealDeltaTime = 1000.0 / 60.0;
+        this.mIdealDeltaTime = 1000.0 / 144.0;
         this.mDeltaTime = this.mIdealDeltaTime * 0.001;
     }
     
@@ -86,7 +86,9 @@ class Engine{
        }
        this.mDeltaTime = elapsedTime;
        this.mDeltaTime *= 0.001;
-       requestAnimationFrame(this.run.bind(this));
+
+       Stats.setDeltaTime(this.mDeltaTime);
+       this.mAnimationFrameHandleId = requestAnimationFrame(this.run.bind(this));
     }
     
     onWindowResize(){
@@ -106,6 +108,27 @@ class Engine{
         return this.mObjectManager;
     }
      
+    clear(animationFrameHandleId){
+
+        DebugDrawUtils.clear();
+        UIUtils.clear();
+
+
+        cancelAnimationFrame(this.mAnimationFrameHandleId);
+        this.mCamera = null;
+        this.mScene= null;
+        this.mRenderer= null;
+        this.mObjectManager= null;
+        this.mCube= null;
+        this.mApp= null;
+        this.mFrameStartTime=0.0;
+        this.mDeltaTime=0.0;
+        this.mFrameEndTime=0.0;
+        this.mIdealDeltaTime=0.0;
+        this.mWidthRatio=0.0;
+        this.mHeightRatio=0.0;
+        this.mAnimationFrameHandleId = null;
+    }
 }
 
 export {Engine};

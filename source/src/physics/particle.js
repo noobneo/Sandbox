@@ -53,6 +53,12 @@ class Particle{
         this.mInverseMass = 1.0 / this.mMass; 
     }
 
+    setPosition(x,y,z){ 
+        this.mPosition.mX = x;
+        this.mPosition.mY = y;
+        this.mPosition.mZ = z;
+    }
+
     setVelocity(x,y,z){ 
         this.mVelocity.mX = x;
         this.mVelocity.mY = y;

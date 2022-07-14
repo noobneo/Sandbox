@@ -13,17 +13,20 @@
 				left: 1000px;
 			}
 		</style>
+		<style>
+			#test-gui-container {
+				position: absolute;
+				top: 16px;
+				left: 50px;
+			}
+		</style>
 	</head>
-	<canvas id="canvas" width="1280" height="800" style="border:2px solid #d3d3d3;">
+	<canvas id="renderCanvas" width="1280" height="800" style="border:2px solid #d3d3d3;">
+	</canvas>
 	<body style="background-color:black;">
-		<script>
-			var main = document.getElementById("canvas");
-        	var render = main.getContext("2d");
-        	main.style.position = "absolute";
-		</script>
 		<script type="module" src="source/thirdparty/threejs/build/three.js"></script>
 		<script type="module" src="source/src/main.js"></script>
 	</body>
-	</canvas>
-<div id="my-gui-container"></div>
+	<div id="my-gui-container"></div>
+	<div id="test-gui-container"></div>
 </html>

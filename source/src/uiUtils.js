@@ -3,14 +3,15 @@ class UIUtils
 {
 
     mGui;
+    mGuiContainer;
     static initiate()
     {
         this.mGui = new GUI({
             autoPlace: false 
         }); 
         
-        var guiContainer = document.getElementById('my-gui-container');
-        guiContainer.appendChild(this.mGui.domElement);
+        this.mGuiContainer = document.getElementById('my-gui-container');
+        this.mGuiContainer.appendChild(this.mGui.domElement);
     };
 
     static addToFolder(folder,property,name,startLimit, endLimit,step = 0.1){
@@ -20,6 +21,13 @@ class UIUtils
     static addFolder(name){ 
         const folder = this.mGui.addFolder(name);
         return folder;
+    }
+
+    static clear(){
+        this.mGuiContainer.removeChild(this.mGui.domElement);
+        this.mGui.destroy();
+        this.mGui = null;
+        this.mGuiContainer = null;
     }
 }
 

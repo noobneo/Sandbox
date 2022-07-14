@@ -15,7 +15,11 @@ class CubeObject extends BaseObject{
         this.mMesh.rotation.set(rotation.x,rotation.y,rotation.z);
         this.mMesh.position.set(position.x,position.y,position.z);
         this.mParticle = new Particle();
+        this.mParticle.setPosition(position.x,position.y,position.z);
+    }
 
+
+    reflectToUI() {
         var cubeFolder = UIUtils.addFolder(this.mName);
         var velocity = cubeFolder.addFolder("Velocity");
         var controller = UIUtils.addToFolder(cubeFolder,this.mParticle,"mMass",0.0,100.0);
@@ -28,7 +32,7 @@ class CubeObject extends BaseObject{
         UIUtils.addToFolder(position,this.mMesh.position,"x",-10, 10);
         UIUtils.addToFolder(position,this.mMesh.position,"y",-10, 10);
         UIUtils.addToFolder(position,this.mMesh.position,"z",-10, 10);
-        cubeFolder.open();
+        cubeFolder.close();
     }
 
     onChangeMass(){

@@ -1,46 +1,26 @@
-import { Engine } from "./engine.js";
-import { DebugDrawUtils } from "./debugDraw.js"
-import { CubeObject } from "./core/cubeObject.js"
+import { DebugDrawUtils } from "../debugDraw.js"
+import { CubeObject } from "../core/cubeObject.js"
+import { App } from "../core/app.js";
 
-class App
+class BulletsDemo extends App
 {
-    mName; 
-    mEngine;
-    mWidth;
-    mHeight;
-    mObjectManager;
     constructor(name,width,height)
     {
-        this.mName = name;
-        this.mWidth = width;
-        this.mHeight  = height;
-        this.mEngine = new Engine(this);
-        this.mObjectManager = this.mEngine.getObjectManager();
-    }
-
-    getWidth()
-    {
-        return this.mWidth;
-    }
-
-    getHeight(){
-        return this.mHeight;
-    }
-
-
-    run(){
-        this.mEngine.start();
-        requestAnimationFrame(this.mEngine.run.bind(this.mEngine));
+        super(name,width,height);
     }
 
     init(){
         //initiate
+        var x = -17;
         var position = new THREE.Vector3( 0, 1, 0 );
         var rotation = new THREE.Vector3( 0, 7, 0,);    
 
       
-        var cube = new CubeObject(1,position,rotation);
+        var cube = new CubeObject(.1,position,rotation);
         this.mObjectManager.addObject(cube);
+        cube.reflectToUI();
+     
+        
    
        /* var cube = DebugDrawUtils.drawCube(1.6,position,rotation);
         var cubeFolder = UIUtils.addFolder("Cube");
@@ -65,9 +45,5 @@ class App
         DebugDrawUtils.drawLine(new THREE.Vector3(4.2,2.5,0),new THREE.Vector3(4.2,-2.5,0));
 
     }
-
-    update(dt){
-        //console.log("Delta Time: "+dt);
-    }
 }
-export{App};
+export{BulletsDemo};

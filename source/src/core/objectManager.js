@@ -27,7 +27,7 @@ class ObjectManager{
     }
 
     addObject(object){
-        this.mCount++;
+        ObjectManager.mCount++;
         this.mObjects.push(object);
         this.mSceneRef.add( object.getMesh() );
     }
