@@ -5,7 +5,7 @@ import { FireWorksDemo } from './fireworksDemo.js';
 import { SpringDemo } from './springDemo.js';
 
 var testList =  {
-    tests : 'BulletsDemo',
+    tests : 'SpringsDemo',
     dt : 0.01667,
     fps : 60.0,
 };
