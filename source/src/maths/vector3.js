@@ -11,7 +11,12 @@ class Vector3
     }
 
     length(){
-        Math.sqrt(lengthSquared());
+        var len = this.lengthSquared();
+        if(len>0)
+        {
+          return  Math.sqrt(this.lengthSquared());
+        }
+        return 0;
     }
 
     lengthSquared(){
@@ -23,6 +28,10 @@ class Vector3
         var len =this.length();
         if(len>0){
             
+            this.mX /=len;
+            this.mY /=len;
+            this.mZ /=len;
+
         }
         else{
             console.assert("Invalid Len");
@@ -99,6 +108,11 @@ class Vector3
         this.mZ = value.mZ;
     }
 
+    clear(){
+        this.mX = 0;
+        this.mY = 0;
+        this.mZ = 0;
+    }
 }
 
 export{Vector3};

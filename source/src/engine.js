@@ -1,7 +1,8 @@
 import { ObjectManager } from "./core/objectManager.js";
-import { DebugDrawUtils } from "./debugDraw.js"
+import { DebugDrawUtils } from "./render/debugDraw.js"
 import { UIUtils } from "./uiUtils.js"
 import { Stats } from "./core/stats.js";
+import { PhysicsManager } from "./physics/physicsManager.js";
 
 class Engine{
 
@@ -18,6 +19,7 @@ class Engine{
     mWidthRatio;
     mHeightRatio;
     mAnimationFrameHandleId;
+    mPhysicsInstance;
     constructor(app){
         this.mApp = app;
         window.addEventListener('resize',this.onWindowResize.bind(this), false);
@@ -55,6 +57,7 @@ class Engine{
         UIUtils.initiate();
         
         this.mObjectManager = new ObjectManager(this.mScene);
+        this.mPhysicsInstance = PhysicsManager.getInstance();
 
        // Position camera
         this.mCamera.position.z = 4;
@@ -73,6 +76,7 @@ class Engine{
     run(){         
        this.mFrameStartTime = performance.now();
 
+       this.mPhysicsInstance.update(this.mDeltaTime); 
        this.mApp.update(this.mDeltaTime);
        this.mObjectManager.update(this.mDeltaTime);
        this.mRenderer.render(this.mScene, this.mCamera);

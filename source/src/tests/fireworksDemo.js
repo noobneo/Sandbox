@@ -1,4 +1,4 @@
-import { DebugDrawUtils } from "../debugDraw.js"
+import { DebugDrawUtils } from "../render/debugDraw.js"
 import { App } from "../core/app.js";
 
 class FireWorksDemo extends App

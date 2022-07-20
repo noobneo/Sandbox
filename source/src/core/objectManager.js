@@ -15,10 +15,7 @@ class ObjectManager{
 
         var len = this.mObjects.length;
         for (let i = 0; i < len; i++) {
-            this.mObjects[i].updatePhysics(dt);
-        }
-        for (let i = 0; i < len; i++) {
-            this.mObjects[i].updateDraws(dt);
+            this.mObjects[i].update(dt);
         }
     }
 
