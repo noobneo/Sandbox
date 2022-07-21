@@ -94,6 +94,7 @@ class CubeObject extends BaseObject{
                     var forceGen = list[i];
                     var controller1 = UIUtils.addToFolder(springForceGenerator,forceGen,"mRestLen",.1,10);
                     var controller2 = UIUtils.addToFolder(springForceGenerator,forceGen,"mCoefficient",.1,100);
+                    UIUtils.addToFolder(springForceGenerator,forceGen,"mIsBungee",false,true);
                     controller1.onFinishChange(this.onChangeSpringForceGen.bind(forceGen));
                     controller2.onFinishChange(this.onChangeSpringForceGen.bind(forceGen));
                 }
@@ -106,8 +107,9 @@ class CubeObject extends BaseObject{
                     
                     var anchoredSpringForceGenerator = cubeFolder.addFolder("anchoredSpringForceGenerator"+(i+1));
                     var forceGen = list[i];
-                    var controller1 = UIUtils.addToFolder(anchoredSpringForceGenerator,forceGen,"mRestLen",.1,10);
-                    var controller2 = UIUtils.addToFolder(anchoredSpringForceGenerator,forceGen,"mCoefficient",.1,100);
+                    UIUtils.addToFolder(anchoredSpringForceGenerator,forceGen,"mRestLen",.1,10);
+                    UIUtils.addToFolder(anchoredSpringForceGenerator,forceGen,"mCoefficient",.1,100);
+                    UIUtils.addToFolder(anchoredSpringForceGenerator,forceGen,"mIsBungee",false,true);
                     var anchorPos =   anchoredSpringForceGenerator.addFolder("AnchorPoint"); 
                     UIUtils.addToFolder(anchorPos,forceGen.mAnchorPoint,"mX",.1,2);
                     UIUtils.addToFolder(anchorPos,forceGen.mAnchorPoint,"mY",.1,2);
@@ -149,7 +151,7 @@ class CubeObject extends BaseObject{
 
             if(key == "springForceGenerator")
             {
-                var forceGen = new SpringForceGenerator(data["restLen"],data["springCoeff"]);
+                var forceGen = new SpringForceGenerator(data["restLen"],data["springCoeff"],data["isBungee"]);
                 PhysicsManager.getInstance().addForceGenerator(forceGen,this.mParticle);
                 //if we have springForceGenerator our engine needs user to specify other
                 //so we register to listen for other
@@ -165,7 +167,7 @@ class CubeObject extends BaseObject{
             if(key == "anchoredSpringForceGenerator")
             {
                 var anchorPt = new Vector3(data["anchorPoint"][0],data["anchorPoint"][1], data["anchorPoint"][2]);
-                var forceGen = new AnchoredSpringForceGenerator(data["restLen"],data["springCoeff"],anchorPt);
+                var forceGen = new AnchoredSpringForceGenerator(data["restLen"],data["springCoeff"],anchorPt,data["isBungee"]);
                 PhysicsManager.getInstance().addForceGenerator(forceGen,this.mParticle);
                 //if we have springForceGenerator our engine needs user to specify other
                 //so we register to listen for other

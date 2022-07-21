@@ -9,12 +9,14 @@ class AnchoredSpringForceGenerator{
     mRestLen;
     mCoefficient;
     mAnchorPoint;
+    mIsBungee ;// if set true it doesn't compresses below len but stretechtes normally (maybe add another variable to set this len value as for now we use restLen??)
 
-    constructor(restLen, springCoefficient,anchorPos){
+    constructor(restLen, springCoefficient,anchorPos, isBungee = false){
 
         this.mRestLen = restLen;
         this.mCoefficient = springCoefficient;
         this.mAnchorPoint = new Vector3();
+        this.mIsBungee = isBungee;
         this.mAnchorPoint.copy(anchorPos);
     }
 
@@ -37,6 +39,9 @@ class AnchoredSpringForceGenerator{
         force.substract(this.mAnchorPoint);
         //
         var magnitude = force.length();
+        //check if compressed
+        if(this.mIsBungee && magnitude<=this.mRestLen) return;
+        
         magnitude = magnitude - this.mRestLen;
         magnitude*= -this.mCoefficient;
         force.normalize();

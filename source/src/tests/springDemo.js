@@ -32,7 +32,8 @@ class SpringDemo extends App
 
               "springForceGenerator": {
                 "restLen": .5,
-                "springCoeff" : 2
+                "springCoeff" : 2,
+                "isBungee" : false,
               }
             }
           };
@@ -57,7 +58,8 @@ class SpringDemo extends App
 
               "springForceGenerator": {
                 "restLen": .5,
-                "springCoeff" : 2
+                "springCoeff" : 2,
+                "isBungee" : false,
               }
             }
           };
@@ -91,6 +93,7 @@ class SpringDemo extends App
                 1,
                 0
               ],
+              "isBungee" : false,
             }
           }
         };

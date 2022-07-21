@@ -5,12 +5,14 @@ class SpringForceGenerator{
     mRestLen;
     mCoefficient;
     mOtherParticle;
+    mIsBungee ;// if set true it doesn't compresses below len but stretechtes normally (maybe add another variable to set this len value as for now we use restLen??)
     
-    constructor(restLen, springCoefficient){
+    constructor(restLen, springCoefficient,isBungee=false){
 
         this.mRestLen = restLen;
         this.mCoefficient = springCoefficient;
         this.mOtherParticle = null
+        this.mIsBungee = isBungee;
     }
 
     setOther(particle){
@@ -36,6 +38,10 @@ class SpringForceGenerator{
         force.substract(posB);
         //
         var magnitude = force.length();
+
+        //check if compressed
+        if(this.mIsBungee && magnitude<=this.mRestLen) return;
+
         magnitude = magnitude - this.mRestLen;
         magnitude*= -this.mCoefficient;
         force.normalize();
