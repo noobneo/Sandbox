@@ -36,7 +36,7 @@ class SpringForceGenerator{
         force.substract(posB);
         //
         var magnitude = force.length();
-        magnitude = Math.abs(magnitude - this.mRestLen);
+        magnitude = magnitude - this.mRestLen;
         magnitude*= -this.mCoefficient;
         force.normalize();
         force.multiplyScalar(magnitude);
