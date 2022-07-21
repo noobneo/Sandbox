@@ -1,6 +1,7 @@
 import { DebugDrawUtils } from "../render/debugDraw.js"
 import { CubeObject } from "../core/cubeObject.js"
 import { App } from "../core/app.js";
+import { Vector3 } from "../maths/vector3.js";
 
 class BulletsDemo extends App
 {
@@ -90,10 +91,10 @@ class BulletsDemo extends App
         //DebugDrawUtils.drawPlane(8,1,position);
 
         //bounds
-        DebugDrawUtils.drawLine(new THREE.Vector3(-4.2,-2.5,0),new THREE.Vector3(4.2,-2.5,0));
-        DebugDrawUtils.drawLine(new THREE.Vector3(-4.2,2.5,0),new THREE.Vector3(4.2,2.5,0));
-        DebugDrawUtils.drawLine(new THREE.Vector3(-4.2,2.5,0),new THREE.Vector3(-4.2,-2.5,0));
-        DebugDrawUtils.drawLine(new THREE.Vector3(4.2,2.5,0),new THREE.Vector3(4.2,-2.5,0));
+        DebugDrawUtils.drawLine(new Vector3(-4.2,-2.5,0),new Vector3(4.2,-2.5,0));
+        DebugDrawUtils.drawLine(new Vector3(-4.2,2.5,0),new Vector3(4.2,2.5,0));
+        DebugDrawUtils.drawLine(new Vector3(-4.2,2.5,0),new Vector3(-4.2,-2.5,0));
+        DebugDrawUtils.drawLine(new Vector3(4.2,2.5,0),new Vector3(4.2,-2.5,0));
 
     }
 }

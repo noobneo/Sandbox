@@ -6,6 +6,8 @@ import { PhysicsManager } from "../physics/physicsManager.js";
 import { DragForceGenerator } from "./../physics/foceGenerators/dragForceGenerator.js";
 import { GravityForceGenerator } from "./../physics/foceGenerators/gravityForceGenerator.js";
 import { SpringForceGenerator } from "./../physics/foceGenerators/springForceGenerator.js";
+import { AnchoredSpringForceGenerator } from "../physics/foceGenerators/anchoredSpringForceGenerator.js";
+import { Vector3 } from "../maths/vector3.js";
 
 class CubeObject extends BaseObject{
 
@@ -96,6 +98,24 @@ class CubeObject extends BaseObject{
                     controller2.onFinishChange(this.onChangeSpringForceGen.bind(forceGen));
                 }
             }
+
+            if(key == "anchoredSpringForceGenerator")
+            {
+                var list  = this.mFunctionGenerators["anchoredSpringForceGenerator"];
+                for(var i = 0 ; i < list.length ; ++i){
+                    
+                    var anchoredSpringForceGenerator = cubeFolder.addFolder("anchoredSpringForceGenerator"+(i+1));
+                    var forceGen = list[i];
+                    var controller1 = UIUtils.addToFolder(anchoredSpringForceGenerator,forceGen,"mRestLen",.1,10);
+                    var controller2 = UIUtils.addToFolder(anchoredSpringForceGenerator,forceGen,"mCoefficient",.1,100);
+                    var anchorPos =   anchoredSpringForceGenerator.addFolder("AnchorPoint"); 
+                    UIUtils.addToFolder(anchorPos,forceGen.mAnchorPoint,"mX",.1,2);
+                    UIUtils.addToFolder(anchorPos,forceGen.mAnchorPoint,"mY",.1,2);
+                    UIUtils.addToFolder(anchorPos,forceGen.mAnchorPoint,"mZ",.1,2);
+                }
+            }
+
+
         }
         cubeFolder.close();
     }
@@ -139,6 +159,21 @@ class CubeObject extends BaseObject{
                     this.mFunctionGenerators["springForceGenerator"] = [];
                 }
                 this.mFunctionGenerators["springForceGenerator"].push(forceGen);
+            }
+
+
+            if(key == "anchoredSpringForceGenerator")
+            {
+                var anchorPt = new Vector3(data["anchorPoint"][0],data["anchorPoint"][1], data["anchorPoint"][2]);
+                var forceGen = new AnchoredSpringForceGenerator(data["restLen"],data["springCoeff"],anchorPt);
+                PhysicsManager.getInstance().addForceGenerator(forceGen,this.mParticle);
+                //if we have springForceGenerator our engine needs user to specify other
+                //so we register to listen for other
+                if(this.mFunctionGenerators["anchoredSpringForceGenerator"]==null)
+                {
+                    this.mFunctionGenerators["anchoredSpringForceGenerator"] = [];
+                }
+                this.mFunctionGenerators["anchoredSpringForceGenerator"].push(forceGen);
             }
         }
 

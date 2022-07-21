@@ -1,6 +1,7 @@
 import { DebugDrawUtils } from "../render/debugDraw.js"
 import { CubeObject } from "../core/cubeObject.js"
 import { App } from "../core/app.js";
+import { Vector3 } from "../maths/vector3.js";
 
 class SpringDemo extends App
 {
@@ -12,12 +13,12 @@ class SpringDemo extends App
     init(){
         //initiate
         var x = -17;
-        var position = new THREE.Vector3( 0, 1, 0 );
+        var position = new THREE.Vector3( 0, 0, 0 );
         var rotation = new THREE.Vector3( 0, 7, 0,);    
 
       
         var cube1 = new CubeObject(.1,position,rotation);
-        var data = {
+        var data1 = {
             "mass" : 0,
             "position": [
               0,
@@ -37,12 +38,12 @@ class SpringDemo extends App
           };
 
 
-        cube1.addComponent("physics",data);
+        cube1.addComponent("physics",data1);
         this.mObjectManager.addObject(cube1);
         cube1.reflectToUI();
 
 
-        var data1 = {
+        var data2 = {
             "mass" : 1,
             "position": [
               0,
@@ -62,18 +63,41 @@ class SpringDemo extends App
           };
      
 
-        var position1 = new THREE.Vector3( 0, 0, 0 );
-        var cube2 = new CubeObject(.1,position1,rotation);
-        cube2.addComponent("physics",data1);
+        var cube2 = new CubeObject(.1,position,rotation);
+        cube2.addComponent("physics",data2);
         this.mObjectManager.addObject(cube2);
         cube2.reflectToUI();
 
 
 
 
-        var position2 = new THREE.Vector3( 0, 0, 0 );
-        var cube3 = new CubeObject(.1,position2,rotation);
-        cube3.addComponent("physics",data1);
+        var data3 = {
+          "mass" : 1,
+          "position": [
+            1,
+            0,
+            0
+          ],
+          "forceGenerators": {
+            "gravityForceGenerator": {
+              "gravity": 1
+            },
+
+            "anchoredSpringForceGenerator": {
+              "restLen": 1,
+              "springCoeff" : 3,
+              "anchorPoint": [
+                1,
+                1,
+                0
+              ],
+            }
+          }
+        };
+
+        
+        var cube3 = new CubeObject(.1,position,rotation);
+        cube3.addComponent("physics",data3);
         cube3.setPosition(1, 0, 0);
         this.mObjectManager.addObject(cube3);
         cube3.reflectToUI();
@@ -83,9 +107,6 @@ class SpringDemo extends App
         cube1.setOtherForPhysics(cube2);
         cube2.setOtherForPhysics(cube1);
 
-
-        cube1.setOtherForPhysics(cube3);
-        cube3.setOtherForPhysics(cube1);
        /* var cube = DebugDrawUtils.drawCube(1.6,position,rotation);
         var cubeFolder = UIUtils.addFolder("Cube");
         var rotationFolder = cubeFolder.addFolder("Rotation");
@@ -103,10 +124,10 @@ class SpringDemo extends App
         //DebugDrawUtils.drawPlane(8,1,position);
 
         //bounds
-        DebugDrawUtils.drawLine(new THREE.Vector3(-4.2,-2.5,0),new THREE.Vector3(4.2,-2.5,0));
-        DebugDrawUtils.drawLine(new THREE.Vector3(-4.2,2.5,0),new THREE.Vector3(4.2,2.5,0));
-        DebugDrawUtils.drawLine(new THREE.Vector3(-4.2,2.5,0),new THREE.Vector3(-4.2,-2.5,0));
-        DebugDrawUtils.drawLine(new THREE.Vector3(4.2,2.5,0),new THREE.Vector3(4.2,-2.5,0));
+        DebugDrawUtils.drawLine(new Vector3(-4.2,-2.5,0),new Vector3(4.2,-2.5,0));
+        DebugDrawUtils.drawLine(new Vector3(-4.2,2.5,0),new Vector3(4.2,2.5,0));
+        DebugDrawUtils.drawLine(new Vector3(-4.2,2.5,0),new Vector3(-4.2,-2.5,0));
+        DebugDrawUtils.drawLine(new Vector3(4.2,2.5,0),new Vector3(4.2,-2.5,0));
 
 
 
